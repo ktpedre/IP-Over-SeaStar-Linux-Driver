@@ -2750,6 +2750,17 @@ config QLGE
 	  To compile this driver as a module, choose M here: the module
 	  will be called qlge.
 
+config SEASTAR
+	tristate "Cray XT SeaStar Ethernet driver"
+	depends on PCI
+	depends on HT_IRQ
+	---help---
+	  This driver supports the Cray XT SeaStar network interface in
+	  Ethernet mode.
+
+	  To compile this driver as a module, choose M here. The module
+	  will be called seastar.
+
 source "drivers/net/sfc/Kconfig"
 
 source "drivers/net/benet/Kconfig"
