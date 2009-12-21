@@ -66,9 +66,9 @@
  * One of these is used to track each in progress transmit.
  */
 struct pending {
-	struct sk_buff *	skb;
-	struct pending *	next;
-	void *			bounce;
+	struct sk_buff		*skb;
+	struct pending		*next;
+	void			*bounce;
 };
 
 
@@ -80,20 +80,20 @@ struct ss_priv {
 
 	unsigned long		host_region_phys;
 
-	volatile uint64_t *	skb_table_phys;
-	struct sk_buff *	skb_table_virt[NUM_SKBS];
+	volatile uint64_t	*skb_table_phys;
+	struct sk_buff		*skb_table_virt[NUM_SKBS];
 
 	struct pending		pending_table[NUM_PENDINGS];
-	struct pending *	tx_pending_free_list;
+	struct pending		*tx_pending_free_list;
 
 	uint32_t		eq[NUM_EQ_ENTRIES];
 	unsigned int		eq_read;
 
-	struct mailbox *	mailbox;
+	struct mailbox		*mailbox;
 	unsigned int		mailbox_cached_read;
 	unsigned int		mailbox_cached_write;
 
-	struct pci_dev *	pdev;
+	struct pci_dev		*pdev;
 };
 
 

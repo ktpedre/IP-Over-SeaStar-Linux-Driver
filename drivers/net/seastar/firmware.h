@@ -99,7 +99,7 @@
 
 /**
  * SeaStar addresses of important structures in SeaStar memory.
- * 
+ *
  * WARNING: These must match the definitions used by the
  *          closed-source SeaStar firmware.
  */
@@ -135,7 +135,7 @@ static volatile uint32_t * const htb_bi
 
 /**
  * Kernel virtual address of the SeaStar's HyperTransport map.
- */ 
+ */
 static volatile uint32_t * const htb_map
 	= (void *)(SEASTAR_VIRT_BASE + SEASTAR_HTB_BASE);
 
@@ -144,7 +144,7 @@ static volatile uint32_t * const htb_map
  * Kernel virtual address of the Host <-> SeaStar mailbox.
  */
 static struct mailbox * const seastar_mailbox
-        = (void *)(SEASTAR_VIRT_BASE + SEASTAR_MAILBOX_BASE);
+	= (void *)(SEASTAR_VIRT_BASE + SEASTAR_MAILBOX_BASE);
 
 
 /**
@@ -163,34 +163,34 @@ static volatile uint16_t * const tx_source
 
 /**
  * The SeaStar NIC Control Block.
- * 
+ *
  * WARNING: This must match the definition used by the
  *          closed-source SeaStar firmware.
  */
 struct niccb {
-	uint32_t	version;			// 0
+	uint32_t	version;			/* 0   */
 	uint8_t		pad[24];
-	uint32_t	build_time;			// 28
+	uint32_t	build_time;			/* 28  */
 	uint8_t		pad2[68];
-	uint32_t	ip_tx;				// 100
-	uint32_t	ip_tx_drop;			// 104
-	uint32_t	ip_rx;				// 108
-	uint32_t	ip_rx_drop;			// 112
+	uint32_t	ip_tx;				/* 100 */
+	uint32_t	ip_tx_drop;			/* 104 */
+	uint32_t	ip_rx;				/* 108 */
+	uint32_t	ip_rx_drop;			/* 112 */
 	uint8_t		pad3[52];
-	uint16_t	local_nid;			// 168
-} __attribute__((packed,aligned));
+	uint16_t	local_nid;			/* 168 */
+} __attribute__((packed, aligned));
 
 
 /**
  * SeaStar datagram packet wire header.
- * 
+ *
  * WARNING: This must match the definition used by the
  *          closed-source SeaStar firmware.
  */
 struct sshdr {
-	uint16_t	length;				// 0
-	uint8_t		lo_macs;			// 2
-	uint8_t		hdr_type;			// 3
+	uint16_t	length;				/* 0 */
+	uint8_t		lo_macs;			/* 2 */
+	uint8_t		hdr_type;			/* 3 */
 } __attribute__((packed));
 
 
@@ -201,8 +201,8 @@ struct sshdr {
  *          closed-source SeaStar firmware.
  */
 struct command {
-	uint8_t		op;				// 0
-	uint8_t		pad[63];			// [1,63]
+	uint8_t		op;				/* 0      */
+	uint8_t		pad[63];			/* [1,63] */
 } __attribute__((packed));
 
 
@@ -213,26 +213,26 @@ struct command {
  *          closed-source SeaStar firmware.
  */
 struct command_init {
-	uint8_t		op;				// 0
-	uint8_t		process_index;			// 1
-	uint16_t	pad;				// 2
-	uint16_t	pid;				// 4
-	uint16_t	jid;				// 6
-	uint16_t	num_pendings;			// 8
-	uint16_t	num_memds;			// 10
-	uint16_t	num_eqcbs;			// 12
-	uint16_t	pending_tx_limit;		// 14
-	uint32_t	pending_table_addr;		// 16
-	uint32_t	up_pending_table_addr;		// 20
-	uint32_t	up_pending_table_ht_addr;	// 24
-	uint32_t	memd_table_addr;		// 28
-	uint32_t	eqcb_table_addr;		// 32
-	uint32_t	shdr_table_ht_addr;		// 36
-	uint32_t	result_block_addr;		// 40
-	uint32_t	eqheap_addr;			// 44
-	uint32_t	eqheap_length;			// 48
-	uint32_t	smb_table_addr;			// 52
-	uint32_t	uid;				// 56
+	uint8_t		op;				/* 0  */
+	uint8_t		process_index;			/* 1  */
+	uint16_t	pad;				/* 2  */
+	uint16_t	pid;				/* 4  */
+	uint16_t	jid;				/* 6  */
+	uint16_t	num_pendings;			/* 8  */
+	uint16_t	num_memds;			/* 10 */
+	uint16_t	num_eqcbs;			/* 12 */
+	uint16_t	pending_tx_limit;		/* 14 */
+	uint32_t	pending_table_addr;		/* 16 */
+	uint32_t	up_pending_table_addr;		/* 20 */
+	uint32_t	up_pending_table_ht_addr;	/* 24 */
+	uint32_t	memd_table_addr;		/* 28 */
+	uint32_t	eqcb_table_addr;		/* 32 */
+	uint32_t	shdr_table_ht_addr;		/* 36 */
+	uint32_t	result_block_addr;		/* 40 */
+	uint32_t	eqheap_addr;			/* 44 */
+	uint32_t	eqheap_length;			/* 48 */
+	uint32_t	smb_table_addr;			/* 52 */
+	uint32_t	uid;				/* 56 */
 } __attribute__((packed));
 
 
@@ -243,8 +243,8 @@ struct command_init {
  *          closed-source SeaStar firmware.
  */
 struct command_mark_alive {
-	uint8_t		op;				// 0
-	uint8_t		index;				// 1
+	uint8_t		op;				/* 0 */
+	uint8_t		index;				/* 1 */
 } __attribute__((packed));
 
 
@@ -255,11 +255,11 @@ struct command_mark_alive {
  *          closed-source SeaStar firmware.
  */
 struct command_init_eqcb {
-	uint8_t		op;				// 0
-	uint8_t 	pad;				// 1
-	uint16_t	eqcb_index;			// 2
-	uint32_t	base;				// 4
-	uint32_t	count;				// 8
+	uint8_t		op;				/* 0 */
+	uint8_t 	pad;				/* 1 */
+	uint16_t	eqcb_index;			/* 2 */
+	uint32_t	base;				/* 4 */
+	uint32_t	count;				/* 8 */
 } __attribute__((packed));
 
 
@@ -270,13 +270,13 @@ struct command_init_eqcb {
  *          closed-source SeaStar firmware.
  */
 struct command_ip_tx {
-	uint8_t		op;				// 0
-	uint8_t		pad;				// 1
-	uint16_t	nid;				// 2
-	uint16_t	length;				// 4
-	uint16_t	pad2;				// 6
-	uint64_t	address;			// 8
-	uint16_t	pending_index;			// 16
+	uint8_t		op;				/* 0  */
+	uint8_t		pad;				/* 1  */
+	uint16_t	nid;				/* 2  */
+	uint16_t	length;				/* 4  */
+	uint16_t	pad2;				/* 6  */
+	uint64_t	address;			/* 8  */
+	uint16_t	pending_index;			/* 16 */
 } __attribute__((packed));
 
 
@@ -287,13 +287,13 @@ struct command_ip_tx {
  *          closed-source SeaStar firmware.
  */
 struct mailbox {
-	volatile struct command		commandq[COMMAND_Q_LENGTH];	// 0
-	volatile uint32_t		resultq[RESULT_Q_LENGTH];	// 4032
+	volatile struct command		commandq[COMMAND_Q_LENGTH]; /* 0    */
+	volatile uint32_t		resultq[RESULT_Q_LENGTH];   /* 4032 */
 
-	volatile uint32_t		resultq_read;			// 4040
-	volatile uint32_t		resultq_write;			// 4044
-	volatile uint32_t		commandq_write;			// 4048
-	volatile uint32_t		commandq_read;			// 4052
+	volatile uint32_t		resultq_read;		    /* 4040 */
+	volatile uint32_t		resultq_write;		    /* 4044 */
+	volatile uint32_t		commandq_write;		    /* 4048 */
+	volatile uint32_t		commandq_read;		    /* 4052 */
 } __attribute__((packed, aligned(PAGE_SIZE)));
 
 
@@ -302,12 +302,11 @@ struct ss_priv;
 
 extern void
 seastar_ip_tx_cmd(
-	struct ss_priv *	ssp,
+	struct ss_priv		*ssp,
 	uint16_t		nid,
 	uint16_t		length,
 	uint64_t		address,
 	uint16_t		pending_index
-	
 );
 
 
@@ -319,7 +318,7 @@ seastar_setup_htb_bi(
 
 extern int
 seastar_hw_init(
-	struct ss_priv *	ssp
+	struct ss_priv		*ssp
 );
 
 

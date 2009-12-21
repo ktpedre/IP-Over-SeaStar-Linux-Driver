@@ -57,10 +57,10 @@ static uint32_t virt_to_fw(struct ss_priv *ssp, void *addr)
 	unsigned long saddr;
 
 	saddr = __pa(addr) - ssp->host_region_phys;
-        saddr &= (2 << 28) - 1;
+	saddr &= (2 << 28) - 1;
 	saddr += (8 << 28);
 
-        return saddr;
+	return saddr;
 }
 
 
@@ -139,7 +139,7 @@ void seastar_setup_htb_bi(uint32_t idr)
  */
 int seastar_hw_init(struct ss_priv *ssp)
 {
-	uint32_t lower_memory = SEASTAR_HOST_BASE; 
+	uint32_t lower_memory = SEASTAR_HOST_BASE;
 	const int num_eq = 1;
 	uint32_t lower_pending;
 	uint32_t lower_eqcb;
@@ -186,7 +186,7 @@ int seastar_hw_init(struct ss_priv *ssp)
 	init_cmd.pending_table_addr	= lower_pending;
 	init_cmd.up_pending_table_addr	= virt_to_fw(ssp, ssp->pending_table);
 	init_cmd.up_pending_table_ht_addr = 0;
-		
+
 	init_cmd.num_memds		= 0;
 	init_cmd.memd_table_addr	= 0;
 

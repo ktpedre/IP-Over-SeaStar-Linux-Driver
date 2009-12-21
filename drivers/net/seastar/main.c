@@ -32,8 +32,8 @@
 #include <linux/if_arp.h>
 #include <linux/ip.h>
 #include <linux/htirq.h>
-#include <asm/io.h>
-#include <asm/uaccess.h>
+#include <linux/io.h>
+#include <linux/uaccess.h>
 #include <net/arp.h>
 #include "firmware.h"
 #include "seastar.h"
@@ -123,7 +123,7 @@ static int eth2ss(struct ss_priv *ssp, struct sk_buff *skb)
 	struct sshdr *sshdr;
 	uint8_t source_lo_mac, dest_lo_mac;
 	uint32_t qb_len;
-	
+
 	/* Read the "low" bytes of the source and destination MAC addresses */
 	ethhdr = (struct ethhdr *)skb->data;
 	source_lo_mac = ethhdr->h_source[5];
@@ -149,7 +149,7 @@ static int eth2ss(struct ss_priv *ssp, struct sk_buff *skb)
 
 	/* Move ahead to allow sshdr to be filled in overtop of the ethhdr */
 	sshdr = (struct sshdr *)
-	        skb_pull(skb, (unsigned int)(ETH_HLEN - sizeof(struct sshdr)));
+		skb_pull(skb, (unsigned int)(ETH_HLEN - sizeof(struct sshdr)));
 
 	/* The length in quad bytes, rounded up to the nearest quad byte.
 	 * SS header is already counted in skb->len as per skb_pull() above */
@@ -200,7 +200,7 @@ static int ss_tx(struct sk_buff *skb, struct net_device *netdev)
 	struct ss_priv *ssp = netdev_priv(netdev);
 	struct ethhdr *eh = (struct ethhdr *)skb->data;
 	struct sshdr *sshdr;
-	uint32_t dest_nid = ntohl(*(uint32_t*)eh->h_dest);
+	uint32_t dest_nid = ntohl(*(uint32_t *)eh->h_dest);
 	struct pending *pending = NULL;
 	void *msg;
 
@@ -247,7 +247,7 @@ static int ss_tx(struct sk_buff *skb, struct net_device *netdev)
 
 	seastar_ip_tx_cmd(
 		ssp,
-		dest_nid, 
+		dest_nid,
 		sshdr->length,
 		virt_to_phys(msg) >> 2,
 		pending_to_index(ssp, pending)
@@ -279,8 +279,7 @@ static void ss_tx_end(struct net_device *netdev, unsigned int pending_index)
 	if (pending->skb)
 		dev_kfree_skb_any(pending->skb);
 
-	if (pending->bounce)
-		kfree(pending->bounce);
+	kfree(pending->bounce);
 
 	free_tx_pending(ssp, pending);
 
@@ -360,14 +359,14 @@ static int ss_header_create(struct sk_buff *skb, struct net_device *netdev,
 
 static uint32_t next_event(struct ss_priv *ssp)
 {
-	uint32_t ev = ssp->eq[ ssp->eq_read ];
-        if (!ev)
-                return 0;
+	uint32_t ev = ssp->eq[ssp->eq_read];
+	if (!ev)
+		return 0;
 
-        ssp->eq[ ssp->eq_read ] = 0;
-        ssp->eq_read = (ssp->eq_read + 1) % NUM_EQ_ENTRIES;
+	ssp->eq[ssp->eq_read] = 0;
+	ssp->eq_read = (ssp->eq_read + 1) % NUM_EQ_ENTRIES;
 
-        return ev;
+	return ev;
 }
 
 
@@ -413,15 +412,15 @@ static irqreturn_t ss_interrupt(int irq, void *dev)
 			break;
 
 		default:
-			dev_err(&ssp->pdev->dev, 
-			        "unknown event type (type=%u, index=%u).\n",
-			        type, index);
+			dev_err(&ssp->pdev->dev,
+				"unknown event type (type=%u, index=%u).\n",
+				type, index);
 		}
 	}
 
 	return IRQ_HANDLED;
 }
-	
+
 
 static const struct net_device_ops ss_netdev_ops = {
 	.ndo_open		= ss_open,
@@ -447,7 +446,7 @@ static int __devinit ss_probe(struct pci_dev *pdev,
 {
 	struct net_device *netdev;
 	struct ss_priv *ssp;
-	int i, irq, err=0;
+	int i, irq, err = 0;
 
 	err = pci_enable_device(pdev);
 	if (err != 0) {
@@ -509,7 +508,7 @@ static int __devinit ss_probe(struct pci_dev *pdev,
 	}
 
 	return 0;
-	
+
 err_out:
 	free_netdev(netdev);
 	return err;
