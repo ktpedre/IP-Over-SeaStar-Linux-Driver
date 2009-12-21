@@ -110,13 +110,13 @@ static uint32_t seastar_cmd(struct ss_priv *ssp, const struct command *cmd,
 void seastar_ip_tx_cmd(struct ss_priv *ssp, uint16_t nid, uint16_t length,
 		       uint64_t address, uint16_t pending_index)
 {
-	struct command_ip_tx tx_cmd;
-
-	tx_cmd.op		=	COMMAND_IP_TX,
-	tx_cmd.nid		=	nid;
-	tx_cmd.length		=	length;
-	tx_cmd.address		=	address;
-	tx_cmd.pending_index	=	pending_index;
+	struct command_ip_tx tx_cmd = {
+		.op		= COMMAND_IP_TX,
+		.nid		= nid,
+		.length		= length,
+		.address	= address,
+		.pending_index	= pending_index,
+	};
 
 	seastar_cmd(ssp, (struct command *) &tx_cmd, 0);
 }
